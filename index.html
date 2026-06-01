@@ -13,11 +13,13 @@
   </style>
 </head>
 <body>
-  <h3>Pregunta: Este que ves, engaño colorido...</h3>
-  <p>El texto subrayado se identifica como:</p>
+  <h2>Examen de Literatura</h2>
 
   <form id="examen">
     Nombre: <input type="text" name="nombre" required><br><br>
+
+    <h3>Pregunta: Este que ves, engaño colorido...</h3>
+    <p>El texto subrayado se identifica como:</p>
 
     <div class="opcion">
       <button type="button" onclick="seleccionar('Metáfora')">Opción A 🔒</button>
@@ -32,14 +34,15 @@
       <button type="button" onclick="seleccionar('Símil')">Opción D 🔒</button>
     </div>
 
+    <!-- Campo oculto donde se guarda la opción elegida -->
     <input type="hidden" name="respuesta" id="respuesta">
+
     <br>
     <button type="button" onclick="enviar()">Enviar</button>
   </form>
 
   <script>
     function seleccionar(opcion) {
-      // Guardar la opción elegida en el campo oculto
       document.getElementById("respuesta").value = opcion;
       alert("Has seleccionado: " + opcion);
     }
@@ -57,7 +60,7 @@
       }
 
       // 👉 Reemplaza esta URL con la de tu Apps Script
-      const url = "https://script.google.com/macros/s/AKfycbyq-zkcSOtbK7JXTCs6F2oAYDlX-XGLHAOwS8OXuAWDX0bOwP4Kx7-hpYEagR3b93bS/exec";
+      const url = "TU_URL_DEL_SCRIPT";
 
       fetch(url, {
         method: "POST",
