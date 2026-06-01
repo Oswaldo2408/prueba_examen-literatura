@@ -2,113 +2,43 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Examen interactivo</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #f0f8ff, #e6f7ff);
-      color: #333;
-      padding: 20px;
-    }
-
-    h2 {
-      text-align: center;
-      color: #004080;
-      margin-bottom: 30px;
-    }
-
-    .pregunta {
-      background: #ffffff;
-      border: 2px solid #004080;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 25px;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .pregunta p {
-      font-weight: bold;
-      color: #00264d;
-    }
-
-    .opcion {
-      margin: 10px 0;
-    }
-
-    button {
-      background-color: #004080;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 8px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background-color: #0066cc;
-      transform: scale(1.05);
-    }
-
-    .respuesta {
-      font-size: 16px;
-      font-weight: bold;
-      color: #008000;
-      margin-top: 10px;
-      display: none;
-    }
-  </style>
+  <title>Examen Interactivo</title>
 </head>
 <body>
-  <h2>Examen de Literatura</h2>
+  <h2>Examen de Prueba</h2>
 
-  <!-- Pregunta 1 -->
-  <div class="pregunta">
-    <p>1. Este que ves, engaño colorido... ¿Qué figura retórica se identifica?</p>
-    <div class="opcion">
-      <button onclick="mostrarRespuesta(this, 'Metáfora')">Opción A 🔒</button>
-    </div>
-    <div class="opcion">
-      <button onclick="mostrarRespuesta(this, 'Alegoría')">Opción B 🔒</button>
-    </div>
-    <div class="opcion">
-      <button onclick="mostrarRespuesta(this, 'Hipérbole')">Opción C 🔒</button>
-    </div>
-    <div class="opcion">
-      <button onclick="mostrarRespuesta(this, 'Símil')">Opción D 🔒</button>
-    </div>
-  </div>
+  <form id="examen">
+    <label>Nombre:</label><br>
+    <input type="text" name="nombre" required><br><br>
 
-  <!-- Pregunta 2 -->
-  <div class="pregunta">
-    <p>2. ¿Quién escribió "Don Quijote de la Mancha"?</p>
-    <div class="opcion">
-      <button onclick="mostrarRespuesta(this, 'Miguel de Cervantes')">Opción A 🔒</button>
-    </div>
-    <div class="opcion">
-      <button onclick="mostrarRespuesta(this, 'Lope de Vega')">Opción B 🔒</button>
-    </div>
-    <div class="opcion">
-      <button onclick="mostrarRespuesta(this, 'Garcilaso de la Vega')">Opción C 🔒</button>
-    </div>
-    <div class="opcion">
-      <button onclick="mostrarRespuesta(this, 'Sor Juana Inés de la Cruz')">Opción D 🔒</button>
-    </div>
-  </div>
+    <label>Pregunta 1: ¿Cuál es la capital de México?</label><br>
+    <input type="text" name="respuesta1" required><br><br>
+
+    <label>Pregunta 2: ¿Quién escribió Don Quijote?</label><br>
+    <input type="text" name="respuesta2" required><br><br>
+
+    <button type="button" onclick="enviar()">Enviar</button>
+  </form>
 
   <script>
-    function mostrarRespuesta(boton, texto) {
-      // Restaura todos los botones a su estado original
-      const botones = document.querySelectorAll('.opcion button');
-      botones.forEach(b => {
-        b.style.display = 'inline-block';
-        b.innerText = b.getAttribute('data-original') || b.innerText;
-      });
+    function enviar() {
+      const form = document.getElementById("examen");
+      const datos = {
+        nombre: form.nombre.value,
+        respuesta1: form.respuesta1.value,
+        respuesta2: form.respuesta2.value
+      };
 
-      // Cambia el botón presionado por la respuesta
-      boton.setAttribute('data-original', boton.innerText);
-      boton.innerText = texto;
+      // 👉 Reemplaza esta URL con la de tu Apps Script
+      const url = "https://script.google.com/macros/s/AKfycbyq-zkcSOtbK7JXTCs6F2oAYDlX-XGLHAOwS8OXuAWDX0bOwP4Kx7-hpYEagR3b93bS/exec";
+
+      fetch(url, {
+        method: "POST",
+        body: JSON.stringify(datos)
+      })
+      .then(res => res.text())
+      .then(msg => alert("Respuestas enviadas: " + msg))
+      .catch(err => alert("Error al enviar: " + err));
     }
   </script>
 </body>
