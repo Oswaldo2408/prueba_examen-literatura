@@ -22,16 +22,16 @@
     <p>El texto subrayado se identifica como:</p>
 
     <div class="opcion">
-      <button type="button" onclick="seleccionar('Metáfora')">Opción A 🔒</button>
+      <button onclick="mostrarRespuesta(this, 'Metáfora')">Opción A 🔒</button>
     </div>
     <div class="opcion">
-      <button type="button" onclick="seleccionar('Alegoría')">Opción B 🔒</button>
+      <button onclick="mostrarRespuesta(this, 'Alegoría')">Opción B 🔒</button>
     </div>
     <div class="opcion">
-      <button type="button" onclick="seleccionar('Hipérbole')">Opción C 🔒</button>
+      <button onclick="mostrarRespuesta(this, 'Hipérbole')">Opción C 🔒</button>
     </div>
     <div class="opcion">
-      <button type="button" onclick="seleccionar('Símil')">Opción D 🔒</button>
+      <button onclick="mostrarRespuesta(this, 'Símil')">Opción D 🔒</button>
     </div>
 
     <!-- Campo oculto donde se guarda la opción elegida -->
@@ -42,9 +42,23 @@
   </form>
 
   <script>
-    function seleccionar(opcion) {
-      document.getElementById("respuesta").value = opcion;
-      alert("Has seleccionado: " + opcion);
+    function mostrarRespuesta(boton, texto) {
+      // Restaurar todos los botones a su estado original
+      const botones = document.querySelectorAll('.opcion button');
+      botones.forEach(b => {
+        b.innerText = b.getAttribute('data-original') || b.innerText;
+      });
+
+      // Guardar el texto original si no está guardado
+      if (!boton.getAttribute('data-original')) {
+        boton.setAttribute('data-original', boton.innerText);
+      }
+
+      // Cambiar el botón presionado por la respuesta
+      boton.innerText = texto;
+
+      // Guardar la respuesta en el campo oculto
+      document.getElementById("respuesta").value = texto;
     }
 
     function enviar() {
@@ -60,7 +74,7 @@
       }
 
       // 👉 Reemplaza esta URL con la de tu Apps Script
-      const url = "https://script.google.com/macros/s/AKfycbyq-zkcSOtbK7JXTCs6F2oAYDlX-XGLHAOwS8OXuAWDX0bOwP4Kx7-hpYEagR3b93bS/exec";
+      const url = "TU_URL_DEL_SCRIPT";
 
       fetch(url, {
         method: "POST",
