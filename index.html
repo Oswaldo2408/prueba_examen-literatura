@@ -2,32 +2,59 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Examen Interactivo</title>
+  <title>Examen con Candados</title>
+  <style>
+    .opcion {
+      margin: 10px 0;
+    }
+    button {
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <h2>Examen de Prueba</h2>
+  <h3>Pregunta: Este que ves, engaño colorido...</h3>
+  <p>El texto subrayado se identifica como:</p>
 
   <form id="examen">
-    <label>Nombre:</label><br>
-    <input type="text" name="nombre" required><br><br>
+    Nombre: <input type="text" name="nombre" required><br><br>
 
-    <label>Pregunta 1: ¿Cuál es la capital de México?</label><br>
-    <input type="text" name="respuesta1" required><br><br>
+    <div class="opcion">
+      <button type="button" onclick="seleccionar('Metáfora')">Opción A 🔒</button>
+    </div>
+    <div class="opcion">
+      <button type="button" onclick="seleccionar('Alegoría')">Opción B 🔒</button>
+    </div>
+    <div class="opcion">
+      <button type="button" onclick="seleccionar('Hipérbole')">Opción C 🔒</button>
+    </div>
+    <div class="opcion">
+      <button type="button" onclick="seleccionar('Símil')">Opción D 🔒</button>
+    </div>
 
-    <label>Pregunta 2: ¿Quién escribió Don Quijote?</label><br>
-    <input type="text" name="respuesta2" required><br><br>
-
+    <input type="hidden" name="respuesta" id="respuesta">
+    <br>
     <button type="button" onclick="enviar()">Enviar</button>
   </form>
 
   <script>
+    function seleccionar(opcion) {
+      // Guardar la opción elegida en el campo oculto
+      document.getElementById("respuesta").value = opcion;
+      alert("Has seleccionado: " + opcion);
+    }
+
     function enviar() {
       const form = document.getElementById("examen");
       const datos = {
         nombre: form.nombre.value,
-        respuesta1: form.respuesta1.value,
-        respuesta2: form.respuesta2.value
+        respuesta: form.respuesta.value
       };
+
+      if (!datos.respuesta) {
+        alert("Primero selecciona una opción con candado.");
+        return;
+      }
 
       // 👉 Reemplaza esta URL con la de tu Apps Script
       const url = "https://script.google.com/macros/s/AKfycbyq-zkcSOtbK7JXTCs6F2oAYDlX-XGLHAOwS8OXuAWDX0bOwP4Kx7-hpYEagR3b93bS/exec";
